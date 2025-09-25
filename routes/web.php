@@ -1,31 +1,20 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/example', function() {
-	return 'This is an example route.';
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/example-2/{id}', [
-	App\Http\Controllers\ExampleController::class, 'example'
-]);
-
-Route::get('/users', [
-	App\Http\Controllers\UserController::class, 'index'
-]);
-
-Route::get('/users/create', [
-	App\Http\Controllers\UserController::class, 'create'
-]);
-
-Route::get('/users/{id}/update', [
-	App\Http\Controllers\UserController::class, 'update'
-]);
-
-Route::get('/users/{id}/delete', [
-	App\Http\Controllers\UserController::class, 'delete'
-]);
+require __DIR__.'/auth.php';
