@@ -8,58 +8,63 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function index() {
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
 		$users = User::all();
-		// SELECT * FROM users;
 
-		$user = User::find(1);
-		// berdasarkan ID
-		// SELECT * FROM users WHERE id = 1 LIMIT 1;
-
-		$user = User::where('username', '=', 'ibas')
-			->first();
-		// berdasarkan kolom username
-		// SELECT * FROM users WHERE username = 'ibas' LIMIT 1;
-
-		$users = User::where('username', '!=', 'ivan')
-			->get();
-		//Negasi, username tidak sama dengan ivan
-
-		$users = User::orderBy('username', 'desc')
-			->get();
-		// Urutkan berdasarkan username secara descending
-
-		dd($users);
-	}
-
-	public function create() {
-		$user = User::create([
-			'name' => 'Azeezah',
-			'username' => 'azeezah',
-			'email' => 'azeezah@example.com',
-			'password' => bcrypt('password123')
+        return view('user.index', [
+			'users' => $users,
 		]);
+    }
 
-		dd($user);
-	}
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
 
-	public function update($id) {
-		//Mencari user berdasarkan id
-		$user = User::find($id);
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
 
-		//Mengupdate data user
-		$user->update([
-			'username' => 'ibas ganteng',
-			'name' => 'Ibas Sukses'
-		]);
+    /**
+     * Display the specified resource.
+     */
+    public function show(User $user)
+    {
+        //
+    }
 
-		//cara akses kolom data user
-		//$user->nama_kolom
-		dd($user->password);
-	}
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
 
-	public function delete($id) {
-		$user = User::find($id);
-		$user->delete();
-	}
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
 }
